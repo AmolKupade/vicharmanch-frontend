@@ -1,0 +1,145 @@
+<header 
+  class="fixed top-0 z-50 w-full transition-all duration-300 border-b"
+  [ngClass]="{
+    'border-transparent': !isScrolled(),
+    'bg-white/80 dark:bg-[#020617]/80 backdrop-blur-xl shadow-sm border-slate-200 dark:border-white/5': isScrolled()
+  }">
+  
+  <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+    
+    <a routerLink="/" class="flex items-center gap-3 group cursor-pointer z-50">
+        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-600/20 group-hover:rotate-12 transition-transform">V</div>
+        <span class="text-2xl font-black tracking-tighter text-slate-900 dark:text-white">Vichar<span class="text-indigo-600">Manch</span></span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <ng-container *ngFor="let link of navLinks">
+        <a [routerLink]="link.path" 
+           routerLinkActive="text-indigo-600 dark:text-indigo-400" 
+           [routerLinkActiveOptions]="{exact: true}"
+           class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+           {{ link.label }}
+        </a>
+      </ng-container>
+    </nav>
+
+    <!-- <div class="hidden md:flex items-center gap-4">
+      <button (click)="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center hover:scale-110 transition active:rotate-12 border border-slate-200 dark:border-white/5 text-lg">
+         <span *ngIf="!isDarkMode()">🌙</span> 
+         <span *ngIf="isDarkMode()">☀️</span>
+      </button>
+      <button routerLink="/login" class="px-6 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-black uppercase tracking-widest shadow-xl hover:scale-105 transition active:scale-95">
+        Sign In
+      </button>
+    </div> -->
+
+    <div class="hidden md:flex items-center gap-4">
+  
+  
+  <button (click)="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center hover:scale-110 transition active:rotate-12 border border-slate-200 dark:border-white/5 text-lg">
+     <span *ngIf="!isDarkMode()">🌙</span> 
+     <span *ngIf="isDarkMode()">☀️</span>
+  </button>
+<div class="flex items-center gap-4">
+  
+  <ng-container *ngIf="!user">
+    <a routerLink="/auth" class="hidden md:block text-xs font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition">Sign In</a>
+    <!-- <a routerLink="/auth" class="px-5 py-2.5 bg-indigo-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-indigo-700 hover:shadow-lg transition">Get Started</a> -->
+  </ng-container>
+
+  <ng-container *ngIf="user">
+    
+  <a routerLink="/create-blog" class="flex items-center gap-2 text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors font-bold text-sm tracking-wide">
+    <span class="text-lg">✍️</span> Write
+  </a>
+
+    <div class="relative group cursor-pointer flex items-center gap-3">
+      
+      <div class="flex items-center gap-2">
+        <img [src]="user.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.name" 
+             class="w-10 h-10 rounded-full border-2 border-indigo-100 dark:border-indigo-900 shadow-sm transition group-hover:border-indigo-500">
+        <div class="hidden md:block text-left">
+          <p class="text-xs font-black text-slate-900 dark:text-white leading-tight">{{ user.name }}</p>
+          <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Creator</p>
+        </div>
+      </div>
+
+      <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#1a1d24] border border-slate-100 dark:border-white/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right z-50 overflow-hidden">
+        <div class="p-4 border-b border-slate-100 dark:border-white/5">
+          <p class="text-xs text-slate-500 truncate">{{ user.email }}</p>
+        </div>
+        <div class="p-2 flex flex-col">
+          <a routerLink="/dashboard" class="px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition">Dashboard</a>
+          <a routerLink="/settings" class="px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition">Settings</a>
+          <button (click)="onLogout()" class="px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 text-left rounded-xl transition mt-1">
+            Sign Out
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </ng-container>
+
+</div>
+</div>
+
+    <div class="flex md:hidden items-center gap-4 z-50">
+      <button (click)="toggleTheme()" class="text-xl hover:scale-110 transition-transform">
+        {{ isDarkMode() ? '☀️' : '🌙' }}
+      </button>
+      <button routerLink="/login" class="w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg active:scale-95 transition-transform">
+        <span class="text-sm">👤</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-[400px]">
+  <div class="bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2rem] px-6 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex justify-between items-center transition-all duration-500">
+    
+    <a routerLink="/" routerLinkActive="active-bottom-link" [routerLinkActiveOptions]="{exact: true}" class="flex flex-col items-center gap-1 group text-slate-400 dark:text-slate-500">
+      <span class="text-xl transition-transform duration-300">🏠</span>
+      <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300">Home</span>
+    </a>
+
+    <!-- <a routerLink="/stories" routerLinkActive="active-bottom-link" class="flex flex-col items-center gap-1 group text-slate-400 dark:text-slate-500">
+      <span class="text-xl transition-transform duration-300">📖</span>
+      <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300">Stories</span>
+    </a> -->
+
+     <a routerLink="/explore" routerLinkActive="active-bottom-link" class="flex flex-col items-center gap-1 group text-slate-400 dark:text-slate-500">
+      <span class="text-xl transition-transform duration-300">✨</span>
+      <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300">Explore</span>
+    </a>
+
+    <!-- <a routerLink="/explore" class="flex flex-col items-center gap-1 group relative -mt-8">
+      <div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-600/40 border-4 border-[#f8fafc] dark:border-[#020617] group-active:scale-95 transition-transform">
+        <span class="text-white text-xl">✨</span>
+      </div>
+      <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Explore</span>
+    </a> -->
+    <a routerLink="/create-blog" class="flex flex-col items-center gap-1 group relative -mt-8">
+      <div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-600/40 border-4 border-[#f8fafc] dark:border-[#020617] group-active:scale-95 transition-transform">
+        <span class="text-white text-xl">✍️</span>
+      </div>
+      <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Write</span>
+    </a>
+
+      <!-- <a routerLink="/create-blog" class="flex items-center gap-2 text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors font-bold text-sm tracking-wide">
+    <span class="text-lg">✍️</span> Write
+  </a> -->
+
+   
+    <a routerLink="/about" routerLinkActive="active-bottom-link" class="flex flex-col items-center gap-1 group text-slate-400 dark:text-slate-500">
+      <span class="text-xl transition-transform duration-300">💡</span>
+      <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300">About</span>
+    </a>
+
+    <a routerLink="/contact" routerLinkActive="active-bottom-link" class="flex flex-col items-center gap-1 group text-slate-400 dark:text-slate-500">
+      <span class="text-xl transition-transform duration-300">📧</span>
+      <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300">Contact</span>
+    </a>
+
+  </div>
+</nav>

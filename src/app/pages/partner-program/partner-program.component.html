@@ -1,0 +1,160 @@
+<div class="min-h-screen bg-[#f8fafc] dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-500 font-sans pb-32 overflow-x-hidden">
+  
+
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 px-6 overflow-hidden flex flex-col items-center text-center">
+    <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400 mb-8 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Applications Open for India
+      </div>
+      
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 text-slate-900 dark:text-white leading-[1.05]">
+        Get paid for your <br class="hidden md:block">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 italic">ideas.</span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+        VicharManch Partner Program lets you earn money based on the reading time and engagement your stories generate from premium members.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div class="relative group w-full sm:w-auto">
+          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+          <button routerLink="/creator-apply" class="relative w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] shadow-xl hover:scale-105 active:scale-95 transition-all">
+            Apply Now
+          </button>
+        </div>
+        <button routerLink="/creator-guidelines" class="w-full sm:w-auto px-10 py-5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-slate-50 dark:hover:bg-white/10 transition-colors shadow-sm">
+          Read Guidelines
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1000px] mx-auto px-6 py-10 relative z-20 animate-fade-in-up delay-100">
+    <div class="p-8 md:p-14 bg-white dark:bg-[#0c0c0c] rounded-[3rem] shadow-2xl border border-slate-200 dark:border-white/5 relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+        <div>
+          <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500 mb-4 flex items-center gap-2">
+            <span class="w-6 h-[2px] bg-emerald-500"></span> Estimator
+          </h3>
+          <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4 leading-tight">See your potential.</h2>
+          <p class="text-slate-500 dark:text-slate-400 font-medium mb-8 text-sm md:text-base">Move the slider to see how much you could earn monthly based on premium member views.</p>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Monthly Views</span>
+              <span class="text-sm font-black text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 px-3 py-1 rounded-lg">{{ formatNumber(views) }}</span>
+            </div>
+            <input type="range" min="1000" max="1000000" step="1000" [value]="views" (input)="onSliderChange($event)" class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+          </div>
+        </div>
+
+        <div class="bg-slate-50 dark:bg-[#080808] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 text-center flex flex-col items-center justify-center relative shadow-inner">
+           <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Estimated Earnings</p>
+           <div class="flex items-start justify-center gap-2 mb-2">
+             <span class="text-3xl md:text-4xl font-bold text-slate-400 mt-1.5">₹</span>
+             <span class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">{{ formatNumber(estimatedEarnings) }}</span>
+           </div>
+           <p class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-full mt-4 flex items-center gap-1">
+             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Per Month
+           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <div class="lg:col-span-5 bg-indigo-600 rounded-[3rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] group-hover:bg-white/20 transition-colors"></div>
+        <h3 class="text-3xl font-black mb-6 relative z-10">Am I eligible?</h3>
+        <p class="text-indigo-200 font-medium mb-10 relative z-10">To ensure a high-quality experience for readers, we have a few basic requirements to join the program.</p>
+        
+        <ul class="space-y-6 relative z-10">
+          <li *ngFor="let req of requirements" class="flex items-start gap-4">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-xs">✓</span>
+            </div>
+            <span class="font-bold text-sm md:text-base">{{ req }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="sm:col-span-2">
+          <h3 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Why write on VicharManch?</h3>
+          <p class="text-slate-500 dark:text-slate-400 font-medium mb-6">We give you the tools to succeed, not just a blank page.</p>
+        </div>
+        
+        <div *ngFor="let perk of perks" class="bg-white dark:bg-[#0c0c0c] p-8 rounded-[2rem] border border-slate-200 dark:border-white/5 shadow-lg hover:-translate-y-1 transition-transform group">
+          <div class="w-12 h-12 bg-slate-50 dark:bg-white/5 rounded-xl flex items-center justify-center text-2xl mb-6 border border-slate-200 dark:border-white/10 group-hover:scale-110 transition-transform">{{ perk.icon }}</div>
+          <h4 class="text-lg font-black text-slate-900 dark:text-white mb-2">{{ perk.title }}</h4>
+          <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">{{ perk.desc }}</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-20 border-y border-slate-200 dark:border-white/5 bg-white dark:bg-[#050505] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Wall of Love</h2>
+        <p class="text-slate-500 dark:text-slate-400 font-medium md:text-lg">See what our creators have to say.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div *ngFor="let t of testimonials" class="bg-slate-50 dark:bg-[#0c0c0c] p-8 md:p-10 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow relative">
+          <span class="text-6xl text-indigo-500/20 absolute top-6 left-6 font-serif">"</span>
+          <p class="text-slate-700 dark:text-slate-300 font-medium text-lg italic leading-relaxed mb-8 relative z-10">
+            {{ t.quote }}
+          </p>
+          <div class="flex items-center gap-4 relative z-10">
+            <img [src]="t.img" class="w-12 h-12 rounded-full border-2 border-indigo-100 dark:border-indigo-900 bg-white">
+            <div>
+              <h4 class="text-sm font-black text-slate-900 dark:text-white">{{ t.author }}</h4>
+              <p class="text-[10px] font-bold uppercase tracking-widest text-indigo-500">{{ t.role }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="space-y-4">
+      <div *ngFor="let faq of faqs" class="bg-white dark:bg-[#0c0c0c] p-6 md:p-8 rounded-[2rem] shadow-md border border-slate-200 dark:border-white/5">
+        <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">{{ faq.question }}</h3>
+        <p class="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{{ faq.answer }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1200px] mx-auto px-6 py-10 mb-20">
+    <div class="relative w-full rounded-[3rem] p-1 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 overflow-hidden shadow-2xl transform hover:-translate-y-1 transition-transform duration-500">
+      <div class="bg-white dark:bg-slate-950 p-12 md:p-24 rounded-[2.9rem] text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-10 pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h2 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight mb-6">Ready to start earning?</h2>
+          <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mb-10">Join thousands of Indian creators who are making a living doing what they love on VicharManch.</p>
+          <button class="px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white transition-all active:scale-95">
+            Apply to Partner Program
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

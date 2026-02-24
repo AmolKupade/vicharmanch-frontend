@@ -1,0 +1,193 @@
+<div class="min-h-screen transition-colors duration-300 font-sans selection:bg-blue-200 dark:selection:bg-blue-900 bg-gray-50 dark:bg-[#020617] text-gray-800 dark:text-gray-200 overflow-x-hidden">
+
+
+
+  <div class="relative max-w-7xl mx-auto mt-24 mb-16 h-[500px] md:h-[650px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl z-0 group">
+    
+    <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] animate-spin-slow neon-gradient z-0"></div>
+    <div class="absolute inset-[3px] bg-gray-900 rounded-[2.4rem] z-0"></div>
+
+    <div class="absolute inset-[4px] rounded-[2.3rem] overflow-hidden z-10 bg-black">
+        <ng-container *ngFor="let slide of slides; let i = index">
+            <div *ngIf="currentSlide() === i" class="absolute inset-0 cursor-pointer" [routerLink]="['/blog', slide.postId]">
+                <img [src]="slide.image" class="w-full h-full object-cover animate-cinematic">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f1117] via-black/40 to-transparent"></div>
+                <div class="absolute inset-0 flex flex-col justify-end pb-16 md:pb-36 px-8 md:px-20 max-w-7xl mx-auto">
+                    <div class="max-w-4xl text-white">
+                        <span class="inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-4 animate-text delay-100 shadow-sm">Featured Story</span>
+                        <h1 class="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight drop-shadow-2xl mb-6 animate-text delay-200">{{ slide.title }}</h1>
+                        <p class="text-lg md:text-2xl text-gray-200 font-light border-l-4 border-blue-500 pl-4 mb-8 animate-text delay-300 max-w-2xl">{{ slide.subtitle }}</p>
+                        <div class="animate-text delay-300 flex gap-4">
+                            <button class="px-8 py-3.5 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-500 transition shadow-lg shadow-blue-600/30 hover:scale-105 transform duration-300">Start Reading</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div class="absolute bottom-0 left-0 w-full h-1.5 bg-gray-700/30"><div *ngIf="true" class="h-full bg-blue-500 animate-progress origin-left shadow-[0_0_15px_#3b82f6]"></div></div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 -mt-10 relative z-20 mb-20 overflow-hidden"
+       (mouseenter)="pauseAnimation()" 
+       (mouseleave)="resumeAnimation()"
+       (touchstart)="pauseAnimation()" 
+       (touchend)="resumeAnimation()">
+    
+    <div class="flex w-max animate-marquee" [class.paused]="isPaused()">
+      <div class="flex space-x-5 px-2.5">
+        <div *ngFor="let cat of categories" class="glass-card flex-shrink-0 w-36 h-44 md:w-48 md:h-52 rounded-3xl bg-white dark:bg-[#1a1d26] border border-white/20 dark:border-gray-700 shadow-xl cursor-pointer flex flex-col justify-center items-center relative overflow-hidden group" [routerLink]="['/category', cat.name]">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br {{cat.color}}"></div>
+          <div class="relative z-10 flex flex-col items-center group-hover:text-white transition-colors duration-300">
+              <span class="text-4xl md:text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{{cat.icon}}</span>
+              <h3 class="font-bold text-sm md:text-lg text-gray-800 dark:text-gray-200 group-hover:text-white">{{cat.name}}</h3>
+              <span class="text-[10px] md:text-xs font-semibold text-gray-400 dark:text-gray-500 mt-2 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg group-hover:bg-white/20 group-hover:text-white">{{cat.count}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex space-x-5 px-2.5">
+        <div *ngFor="let cat of categories" class="glass-card flex-shrink-0 w-36 h-44 md:w-48 md:h-52 rounded-3xl bg-white dark:bg-[#1a1d26] border border-white/20 dark:border-gray-700 shadow-xl cursor-pointer flex flex-col justify-center items-center relative overflow-hidden group" [routerLink]="['/category', cat.name]">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br {{cat.color}}"></div>
+          <div class="relative z-10 flex flex-col items-center group-hover:text-white transition-colors duration-300">
+              <span class="text-4xl md:text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{{cat.icon}}</span>
+              <h3 class="font-bold text-sm md:text-lg text-gray-800 dark:text-gray-200 group-hover:text-white">{{cat.name}}</h3>
+              <span class="text-[10px] md:text-xs font-semibold text-gray-400 dark:text-gray-500 mt-2 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg group-hover:bg-white/20 group-hover:text-white">{{cat.count}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 pb-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <div class="lg:col-span-8 space-y-16">
+        
+        <section *ngIf="featuredBlog">
+          <div class="flex items-center space-x-3 mb-8">
+            <div class="w-1.5 h-8 bg-blue-600 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]"></div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Editor's Pick</h2>
+          </div>
+          <div class="group cursor-pointer rounded-[2rem] overflow-hidden bg-white dark:bg-[#1a1d26] border border-gray-100 dark:border-gray-800 hover:border-blue-500/30 shadow-xl hover:shadow-2xl transition-all duration-500" [routerLink]="['/blog', featuredBlog.id]">
+            <div class="relative h-64 md:h-[450px] overflow-hidden">
+              <img [src]="featuredBlog.image" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+              <div class="absolute top-6 left-6">
+                <span class="bg-white/90 dark:bg-black/80 backdrop-blur-xl text-gray-900 dark:text-white px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg">{{ featuredBlog.tag }}</span>
+              </div>
+            </div>
+            <div class="p-8 md:p-10">
+              <h3 class="text-2xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 group-hover:text-blue-500 transition leading-tight">{{ featuredBlog.title }}</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-base md:text-xl leading-relaxed mb-8">{{ featuredBlog.excerpt }}</p>
+              <button class="text-white bg-gray-900 dark:bg-blue-600 px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 transition shadow-lg">Read Full Story</button>
+            </div>
+          </div>
+        </section>
+
+        <section>
+           <div class="flex items-center space-x-3 mb-8">
+             <div class="w-1.5 h-8 bg-purple-500 rounded-full"></div>
+             <h2 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Curated Collections</h2>
+           </div>
+           <div class="grid md:grid-cols-2 gap-6">
+              <div *ngFor="let col of collections" class="relative h-64 rounded-3xl overflow-hidden cursor-pointer group shadow-lg" [routerLink]="col.link">
+                 <img [src]="col.image" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                 <div class="absolute bottom-6 left-6">
+                    <h3 class="text-2xl font-bold text-white mb-1">{{ col.title }}</h3>
+                    <p class="text-sm text-gray-300">{{ col.subtitle }}</p>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        <section>
+          <div class="flex items-center space-x-3 mb-8">
+            <div class="w-1.5 h-8 bg-green-500 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Latest Stories</h2>
+          </div>
+          <div class="space-y-6">
+            <div *ngFor="let article of latestArticles" class="flex flex-col md:flex-row gap-6 group cursor-pointer bg-white dark:bg-[#1a1d26] p-5 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition duration-300" [routerLink]="['/blog', article.id]">
+              <div class="w-full md:w-1/3 h-52 md:h-44 rounded-2xl overflow-hidden">
+                <img [src]="article.image" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+              </div>
+              <div class="w-full md:w-2/3 flex flex-col justify-center">
+                <div class="flex items-center space-x-3 mb-3">
+                  <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-md uppercase tracking-wide">{{ article.tag }}</span>
+                  <span class="text-xs text-gray-400 font-medium">{{ article.readTime }}</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-500 transition leading-snug">{{ article.title }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">{{ article.excerpt }}</p>
+                <div class="flex items-center space-x-2 mt-auto">
+                   <img [src]="article.authorImg" class="w-6 h-6 rounded-full">
+                   <span class="text-xs font-bold text-gray-700 dark:text-gray-300">{{ article.author }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="lg:col-span-4 space-y-8">
+        <div class="sticky top-24 space-y-8">
+          
+          <div class="bg-gray-900 dark:bg-blue-900/20 border border-gray-800 dark:border-blue-500/30 rounded-[2rem] p-8 text-white text-center shadow-2xl relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-blue-500/30 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-blue-500/50 transition duration-700"></div>
+            <h3 class="text-2xl font-bold mb-2">Subscribe</h3>
+            <p class="text-gray-400 dark:text-blue-200 text-sm mb-6">Join 10,000+ creators.</p>
+            <div class="space-y-3 relative z-10">
+              <input type="email" placeholder="Email address" class="w-full px-5 py-3 rounded-xl bg-gray-800 dark:bg-black/50 border border-gray-700 dark:border-blue-500/30 text-white text-sm outline-none focus:border-blue-500 transition">
+              <button class="w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-sm hover:bg-blue-500 transition shadow-lg shadow-blue-600/30">Join Now</button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-[#1a1d26] p-6 rounded-[2rem] shadow-sm border border-gray-100 dark:border-gray-800">
+             <h3 class="font-bold text-gray-900 dark:text-white mb-6 uppercase text-xs tracking-widest border-b dark:border-gray-700 pb-4">Who to Follow</h3>
+             <div class="space-y-6">
+                <div *ngFor="let writer of topWriters" class="flex items-center justify-between">
+                   <div class="flex items-center gap-3">
+                      <img [src]="writer.img" class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700">
+                      <div>
+                         <p class="text-sm font-bold text-gray-900 dark:text-white hover:text-blue-500 cursor-pointer">{{ writer.name }}</p>
+                         <p class="text-[10px] text-gray-500 uppercase">{{ writer.role }}</p>
+                      </div>
+                   </div>
+                   <button class="text-blue-600 dark:text-blue-400 text-xs font-bold border border-blue-100 dark:border-blue-900 px-3 py-1 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">Follow</button>
+                </div>
+             </div>
+          </div>
+
+          <div class="bg-white dark:bg-[#1a1d26] p-8 rounded-[2rem] shadow-sm border border-gray-100 dark:border-gray-800">
+             <h3 class="font-bold text-gray-900 dark:text-white mb-6 uppercase text-xs tracking-widest border-b dark:border-gray-700 pb-4">Trending</h3>
+             <div class="flex flex-wrap gap-2">
+                <span *ngFor="let topic of trendingTopics" class="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-black dark:hover:bg-blue-600 hover:text-white hover:border-transparent cursor-pointer transition-colors">
+                  {{ topic }}
+                </span>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+       <div class="relative w-full rounded-[3rem] p-[2px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl group transform hover:-translate-y-1 transition-transform duration-500 mt-20">
+      <div class="bg-white dark:bg-slate-950 rounded-[2.9rem] p-8 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-10 overflow-hidden relative">
+        
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-10 pointer-events-none"></div>
+        <div class="absolute -top-24 -left-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px] pointer-events-none group-hover:bg-indigo-500/30 transition-colors duration-700"></div>
+
+        <div class="relative z-10 text-center lg:text-left w-full lg:w-1/2">
+          <span class="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest mb-4 inline-block shadow-sm">Join the Elite</span>
+          <h3 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Ideas that matter.</h3>
+          <p class="text-slate-500 dark:text-slate-400 font-medium md:text-lg">Subscribe to get our best essays, tech insights, and interviews delivered straight to your inbox every Sunday.</p>
+        </div>
+        
+        <div class="relative z-10 flex flex-col sm:flex-row w-full lg:w-auto gap-3">
+          <input type="email" placeholder="Enter your email address" class="w-full sm:w-80 px-6 py-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all text-slate-900 dark:text-white font-medium text-center sm:text-left shadow-inner dark:shadow-none">
+          <button class="w-full sm:w-auto px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white transition-all shadow-xl active:scale-95">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

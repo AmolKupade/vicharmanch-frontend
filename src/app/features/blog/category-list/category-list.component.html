@@ -1,0 +1,157 @@
+<div class="min-h-screen bg-[#f8fafc] dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-500">
+  
+  <div class="relative pt-20 pb-16 px-6 border-b border-slate-200 dark:border-white/5 bg-white dark:bg-[#020617]">
+    <div class="max-w-7xl mx-auto">
+      
+      <nav class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">
+        <a routerLink="/" class="hover:text-indigo-600 transition">Home</a>
+        <span>/</span>
+        <span class="text-slate-600 dark:text-slate-200">Category</span>
+      </nav>
+
+      <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+        <div>
+          <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white">
+            {{ categoryName() }}<span class="text-indigo-600">.</span>
+          </h1>
+          <p class="text-xl text-slate-500 dark:text-slate-400 max-w-2xl font-serif">
+            Curated stories, deep dives, and expert perspectives on {{ categoryName() }}.
+          </p>
+        </div>
+        
+        <div class="flex gap-8">
+          <div>
+            <span class="block text-3xl font-black">{{ posts().length }}</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Articles</span>
+          </div>
+          <div>
+            <span class="block text-3xl font-black">12k</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Followers</span>
+          </div>
+          <button class="px-6 py-2 h-fit bg-slate-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-black uppercase tracking-widest hover:scale-105 transition shadow-xl">
+            Follow
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="loading()" class="py-40 flex justify-center">
+    <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+
+  <div *ngIf="!loading()" class="max-w-7xl mx-auto px-6 py-16">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <div class="lg:col-span-8">
+        
+        <div *ngIf="featuredPost()" [routerLink]="['/blog', featuredPost().id]" 
+             class="group relative h-[500px] rounded-[2.5rem] overflow-hidden mb-16 cursor-pointer shadow-2xl">
+          <img [src]="featuredPost().image" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          
+          <div class="absolute bottom-0 left-0 p-8 md:p-12">
+            <span class="px-3 py-1 bg-indigo-600 text-white rounded-lg text-[10px] font-black uppercase tracking-widest mb-4 inline-block">Editor's Pick</span>
+            <h2 class="text-3xl md:text-5xl font-black text-white leading-tight mb-4 group-hover:underline decoration-2 decoration-indigo-500 underline-offset-4">
+              {{ featuredPost().title }}
+            </h2>
+            <p class="text-slate-300 font-serif text-lg line-clamp-2 max-w-xl mb-6">{{ featuredPost().excerpt }}</p>
+            
+            <div class="flex items-center gap-3">
+               <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + featuredPost().author" class="w-10 h-10 rounded-full border-2 border-white/20">
+               <div>
+                  <p class="text-white text-xs font-bold">{{ featuredPost().author }}</p>
+                  <p class="text-slate-400 text-[10px] uppercase">{{ featuredPost().date }} · {{ featuredPost().readTime }}</p>
+               </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8 border-b border-slate-200 dark:border-white/5 pb-4">Latest in {{ categoryName() }}</h3>
+
+        <div class="space-y-12">
+          <div *ngFor="let post of gridPosts()" [routerLink]="['/blog', post.id]" 
+               class="group flex flex-col md:flex-row gap-6 md:gap-8 cursor-pointer items-start">
+            
+            <div class="w-full md:w-5/12 aspect-[4/3] rounded-2xl overflow-hidden relative">
+               <img [src]="post.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+
+            <div class="w-full md:w-7/12 py-2">
+               <div class="flex items-center gap-2 mb-3">
+                  <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">{{ post.tag }}</span>
+                  <span class="text-slate-300">•</span>
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ post.date }}</span>
+               </div>
+               <h3 class="text-2xl font-black text-slate-900 dark:text-white leading-tight mb-3 group-hover:text-indigo-600 transition-colors">
+                  {{ post.title }}
+               </h3>
+               <p class="text-slate-500 dark:text-slate-400 leading-relaxed font-serif line-clamp-2 mb-4">
+                  {{ post.excerpt }}
+               </p>
+               <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-slate-900 dark:text-white border-b border-transparent group-hover:border-slate-900 dark:group-hover:border-white transition-all">Read Story</span>
+                  <span class="text-xs transition-transform group-hover:translate-x-1">→</span>
+               </div>
+            </div>
+
+          </div>
+        </div>
+        
+        <div *ngIf="posts().length === 0" class="text-center py-20 bg-slate-50 dark:bg-white/5 rounded-3xl border border-dashed border-slate-300 dark:border-white/10">
+          <span class="text-4xl">📝</span>
+          <h3 class="text-xl font-bold mt-4">No stories yet.</h3>
+          <p class="text-sm text-slate-500">Check back later for updates in {{ categoryName() }}.</p>
+        </div>
+
+      </div>
+
+      <aside class="lg:col-span-4 space-y-10">
+        
+        <div class="p-8 bg-white dark:bg-white/5 rounded-[2rem] border border-slate-200 dark:border-white/5 shadow-lg">
+           <h4 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Top Writers</h4>
+           <div class="space-y-6">
+              <div *ngFor="let writer of topWriters; let i = index" class="flex items-center gap-4 group cursor-pointer">
+                 <span class="text-2xl font-black text-slate-200 group-hover:text-indigo-600 transition">0{{i+1}}</span>
+                 <img [src]="writer.img" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition">
+                 <div>
+                    <h5 class="font-bold text-sm text-slate-900 dark:text-white">{{ writer.name }}</h5>
+                    <p class="text-[10px] uppercase text-slate-500">{{ writer.role }}</p>
+                 </div>
+                 <button class="ml-auto px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 text-[10px] font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition">
+                    +
+                 </button>
+              </div>
+           </div>
+        </div>
+
+        <div class="p-8 bg-indigo-600 rounded-[2rem] text-white text-center relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+            <h4 class="text-2xl font-black mb-3 relative z-10">Get the best of {{ categoryName() }}.</h4>
+            <p class="text-indigo-100 text-sm mb-6 relative z-10">Weekly curated stories sent to your inbox.</p>
+            <input type="email" placeholder="Email address" class="w-full px-4 py-3 bg-white/10 rounded-xl border border-white/20 outline-none placeholder:text-indigo-200 mb-3 relative z-10">
+            <button class="w-full py-3 bg-white text-indigo-600 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-indigo-50 transition relative z-10">Subscribe</button>
+        </div>
+
+        <div class="p-8 bg-slate-50 dark:bg-white/5 rounded-[2rem] border border-slate-200 dark:border-white/5">
+           <h4 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Trending Topics</h4>
+           <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-indigo-600 cursor-pointer transition">#AI</span>
+              <span class="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-indigo-600 cursor-pointer transition">#Web3</span>
+              <span class="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-indigo-600 cursor-pointer transition">#Future</span>
+              <span class="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-indigo-600 cursor-pointer transition">#Startup</span>
+           </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <footer class="py-12 text-center border-t border-slate-200 dark:border-white/5 mt-12">
+    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">© 2026 VicharManch Category</p>
+  </footer>
+
+</div>

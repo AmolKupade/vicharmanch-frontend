@@ -1,0 +1,202 @@
+<div class="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-500 font-sans pb-32 overflow-x-hidden selection:bg-indigo-300 dark:selection:bg-indigo-900">
+
+  <div *ngIf="isLoading" class="flex flex-col items-center justify-center min-h-[80vh] animate-fade-in">
+    <div class="relative w-24 h-24 flex items-center justify-center mb-6">
+      <div class="absolute inset-0 border-4 border-indigo-500/20 rounded-full"></div>
+      <div class="absolute inset-0 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <span class="text-2xl">🌐</span>
+    </div>
+    <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-2">Fetching Stories...</h2>
+    <p class="text-slate-500 font-medium text-sm">Connecting to VicharManch live database</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+
+    <div class="sticky top-20 z-50 bg-[#F8FAFC]/90 dark:bg-[#020617]/90 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 pt-6 pb-4 px-6 animate-fade-in-up">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 items-center justify-between">
+        
+        <div class="flex overflow-x-auto no-scrollbar gap-2 w-full md:w-[60%] snap-x mask-fade-right">
+          <button *ngFor="let cat of categories" 
+                  (click)="setCategory(cat)"
+                  [ngClass]="activeCategory === cat ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md' : 'bg-transparent text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10'"
+                  class="snap-start whitespace-nowrap px-5 py-2 rounded-full text-sm font-bold transition-all border border-slate-200 dark:border-white/10">
+            {{ cat }}
+          </button>
+        </div>
+
+        <div class="w-full md:w-[40%] relative group">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-0 group-hover:opacity-30 transition duration-500" [ngClass]="{'opacity-50 blur-md': searchQuery}"></div>
+          <div class="relative flex items-center bg-white dark:bg-[#0c0c0c] rounded-full p-1 border border-slate-200 dark:border-white/10 shadow-sm">
+            <span class="pl-4 pr-2 text-slate-400">
+              <svg *ngIf="!searchQuery" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <svg *ngIf="searchQuery" class="w-5 h-5 text-indigo-500 animate-spin-slow" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            </span>
+            <input type="text" 
+                   (input)="onSearch($event)" 
+                   [value]="searchQuery"
+                   placeholder="Search VicharManch..." 
+                   class="w-full bg-transparent border-none outline-none text-slate-900 dark:text-white text-sm py-2 placeholder:text-slate-400 font-bold">
+            <button *ngIf="searchQuery" (click)="searchQuery = ''; onSearch({target: {value: ''}})" class="pr-4 text-slate-400 hover:text-rose-500">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main *ngIf="!searchQuery" class="max-w-7xl mx-auto px-6 mt-8 space-y-16 animate-fade-in-up">
+
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 group relative rounded-[2rem] overflow-hidden shadow-xl cursor-pointer">
+          <div class="absolute inset-0 bg-gradient-to-br {{ heroStories[0].bg }} opacity-90 group-hover:scale-105 transition-transform duration-700"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="relative p-8 md:p-12 flex flex-col h-full min-h-[450px] justify-end">
+            <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-black uppercase tracking-widest text-white mb-4 border border-white/20 w-max">{{ heroStories[0].tag }}</span>
+            <h2 class="text-3xl md:text-5xl font-black text-white leading-[1.1] mb-4 group-hover:text-indigo-200 transition-colors">{{ heroStories[0].title }}</h2>
+            <p class="text-lg text-slate-300 font-medium max-w-2xl mb-6 line-clamp-2">{{ heroStories[0].desc }}</p>
+            <div class="flex items-center gap-3 text-white">
+              <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold border border-white/20 shadow-inner backdrop-blur-sm">{{ heroStories[0].author.charAt(0) }}</div>
+              <div>
+                <p class="text-sm font-bold">{{ heroStories[0].author }}</p>
+                <p class="text-xs text-white/60">{{ heroStories[0].read }} read</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col gap-6">
+          <div *ngFor="let story of heroStories | slice:1" class="flex-1 group relative rounded-[2rem] overflow-hidden shadow-lg cursor-pointer min-h-[210px]">
+            <div class="absolute inset-0 bg-gradient-to-br {{ story.bg }} opacity-90 group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="relative p-8 flex flex-col h-full justify-end">
+              <span class="text-[10px] font-black uppercase tracking-widest text-white/80 mb-2 block">{{ story.tag }}</span>
+              <h3 class="text-2xl font-black text-white leading-snug mb-3">{{ story.title }}</h3>
+              <p class="text-sm text-white/80 font-bold">By {{ story.author }} • {{ story.read }} read</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="podcasts.length > 0">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">🎧 Trending Audio</h3>
+          <button class="text-sm font-bold text-indigo-600 hover:text-indigo-500">View All</button>
+        </div>
+        <div class="flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x">
+          <div *ngFor="let pod of podcasts" class="snap-start shrink-0 w-72 p-5 rounded-[2rem] bg-gradient-to-br {{ pod.bg }} shadow-lg relative overflow-hidden group cursor-pointer hover:-translate-y-1 transition-transform">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+            <div class="relative z-10 flex gap-4 items-center">
+              <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shrink-0">
+                 <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white leading-tight mb-1 line-clamp-2">{{ pod.title }}</h4>
+                <p class="text-[10px] text-white/70 font-bold uppercase tracking-wider">{{ pod.time }} • {{ pod.host }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <div class="lg:col-span-8 space-y-8">
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-6 border-b border-slate-200 dark:border-white/10 pb-4">Latest from {{ activeCategory }}</h3>
+          
+          <article *ngFor="let article of feedArticles" class="group flex flex-col sm:flex-row gap-6 items-start py-6 border-b border-slate-100 dark:border-white/5 last:border-0 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 p-4 -mx-4 rounded-2xl transition-colors">
+            <div class="w-full sm:w-48 aspect-[16/10] sm:aspect-square rounded-2xl bg-gradient-to-br {{ article.coverClass }} shrink-0 shadow-inner overflow-hidden relative">
+               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+            </div>
+            
+            <div class="flex-1 flex flex-col h-full py-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 px-2 py-0.5 rounded-md">{{ article.tag }}</span>
+                <span class="text-slate-400 text-xs font-bold">· {{ article.date }}</span>
+              </div>
+              <h3 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug">{{ article.title }}</h3>
+              <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">{{ article.desc }}</p>
+              
+              <div class="mt-auto flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                  <div class="w-5 h-5 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-[8px] uppercase">{{ article.author.charAt(0) }}</div>
+                  {{ article.author }}
+                </span>
+                <div class="flex items-center gap-4 text-slate-400 text-xs font-bold">
+                  <span class="flex items-center gap-1 hover:text-indigo-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.514M11 5v.01"></path></svg> {{ article.likes || '1.2k' }}</span>
+                  <span class="flex items-center gap-1 hover:text-indigo-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> {{ article.comments || '89' }}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <aside class="lg:col-span-4 space-y-10 lg:sticky lg:top-40 h-fit pb-20">
+          
+          <div *ngIf="topCreators.length > 0" class="bg-white dark:bg-[#0c0c0c] rounded-[2rem] p-6 border border-slate-200 dark:border-white/10 shadow-lg">
+            <h3 class="text-base font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-center">Top Writers</h3>
+            <div class="space-y-4">
+              <div *ngFor="let creator of topCreators" class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm {{ creator.avatarBg }} shadow-md uppercase">
+                    {{ creator.name.charAt(0) }}
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 transition-colors flex items-center gap-1">
+                      {{ creator.name }}
+                      <svg *ngIf="creator.verified" class="w-3.5 h-3.5 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+                    </h4>
+                    <p class="text-[10px] text-slate-500">{{ creator.handle }}</p>
+                  </div>
+                </div>
+                <button class="px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-xs font-bold hover:bg-indigo-500 hover:text-white transition-colors">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50 dark:bg-indigo-500/5 rounded-[2rem] p-6 border border-indigo-100 dark:border-indigo-500/20">
+            <h3 class="text-base font-black text-indigo-900 dark:text-indigo-400 mb-6 flex items-center gap-2">🔥 Community Pulse</h3>
+            <div class="space-y-5">
+              <div *ngFor="let disc of discussions" class="group cursor-pointer border-b border-indigo-200/50 dark:border-indigo-500/20 pb-4 last:border-0 last:pb-0">
+                <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">{{ disc.topic }}</h4>
+                <div class="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                  <span>{{ disc.comments }} Comments</span> • <span>{{ disc.time }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <main *ngIf="searchQuery" class="max-w-7xl mx-auto px-6 mt-8 relative z-10 animate-fade-in-up">
+      
+      <div class="mb-10 border-b border-slate-200 dark:border-white/10 pb-6">
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white">Results for <span class="text-indigo-500">"{{ searchQuery }}"</span></h2>
+        <p class="text-slate-500 mt-2 font-medium">Found {{ filteredArticles.length }} articles.</p>
+      </div>
+
+      <div class="max-w-4xl">
+        <div *ngIf="filteredArticles.length === 0" class="py-20 text-center bg-white/50 dark:bg-white/5 rounded-[2rem] border border-dashed border-slate-300 dark:border-white/20">
+          <div class="text-5xl mb-4">🔍</div>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white mb-2">No matches found</h3>
+          <p class="text-slate-500 text-sm">Try searching for keywords like "Design", "Tech", or "Startups".</p>
+        </div>
+
+        <div class="space-y-6">
+          <article *ngFor="let article of filteredArticles" class="group bg-white dark:bg-[#0c0c0c] p-4 md:p-6 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col sm:flex-row gap-6 items-center">
+            <div class="w-full sm:w-40 aspect-video sm:aspect-square rounded-xl bg-gradient-to-br {{ article.coverClass }} shrink-0"></div>
+            <div class="flex-1 w-full">
+              <span class="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2 block">{{ article.tag }}</span>
+              <h3 class="text-xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 transition-colors leading-snug">{{ article.title }}</h3>
+              <p class="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">{{ article.desc }}</p>
+              <div class="flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-300">
+                <div class="w-6 h-6 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center uppercase">{{ article.author.charAt(0) }}</div>
+                {{ article.author }} • {{ article.date }}
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+
+  </div> </div>

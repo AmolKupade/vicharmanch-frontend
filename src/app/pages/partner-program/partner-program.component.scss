@@ -1,0 +1,43 @@
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.animate-fade-in-up { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.delay-100 { animation-delay: 0.1s; }
+
+/* Custom Webkit Range Slider */
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0; 
+    border-radius: 99px;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #4f46e5; 
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-top: -8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    
+    &:hover { transform: scale(1.15); }
+    &:active { transform: scale(0.95); }
+  }
+}
+
+:host-context(.dark) input[type=range]::-webkit-slider-runnable-track {
+  background: #1e293b; 
+}
+:host-context(.dark) input[type=range]::-webkit-slider-thumb {
+  border-color: #0c0c0c;
+}

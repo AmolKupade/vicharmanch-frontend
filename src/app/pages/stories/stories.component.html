@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-[#f8fafc] dark:bg-[#020617] pt-28 pb-20 px-6 transition-colors duration-500">
+  <div class="max-w-7xl mx-auto">
+    
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+      <div>
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter mb-2">
+          Latest Stories
+        </h1>
+        <p class="text-slate-500 dark:text-slate-400">Curated insights for the modern mind.</p>
+      </div>
+      
+      <div class="flex gap-3 overflow-x-auto pb-2 max-w-full no-scrollbar">
+        <button *ngFor="let cat of categories" 
+                (click)="filterPosts(cat)"
+                class="px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap border"
+                [ngClass]="activeCategory() === cat 
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/20' 
+                  : 'bg-white dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10 hover:border-indigo-600'">
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="featuredPost" class="relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden mb-20 group cursor-pointer shadow-2xl" [routerLink]="['/blog', featuredPost.id]">
+      <img [src]="featuredPost.image" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+      
+      <div class="absolute bottom-0 left-0 p-8 md:p-16 max-w-4xl">
+        <div class="flex items-center gap-3 mb-4">
+           <span class="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-black uppercase tracking-widest">Featured</span>
+           <span class="text-xs font-bold text-slate-300 uppercase tracking-widest">{{ featuredPost.tag }}</span>
+        </div>
+        <h2 class="text-4xl md:text-7xl font-black text-white leading-[1.1] mb-6 group-hover:text-indigo-300 transition-colors">
+          {{ featuredPost.title }}
+        </h2>
+        <p class="text-lg md:text-xl text-slate-200 font-serif leading-relaxed line-clamp-2 max-w-2xl mb-8">
+          {{ featuredPost.excerpt }}
+        </p>
+        <div class="flex items-center gap-4">
+           <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + featuredPost.author" class="w-10 h-10 rounded-full border-2 border-white">
+           <div>
+              <p class="text-white text-xs font-bold">{{ featuredPost.author }}</p>
+              <p class="text-slate-400 text-[10px] uppercase">{{ featuredPost.readTime }} read</p>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="visiblePosts.length > 0; else noData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-12">
+      
+      <div *ngFor="let post of visiblePosts; let i = index" 
+           class="group cursor-pointer flex flex-col h-full animate-fade-in-up" 
+           [style.animation-delay]="i * 100 + 'ms'"
+           [routerLink]="['/blog', post.id]">
+        
+        <div class="h-64 rounded-[2rem] overflow-hidden mb-6 relative shadow-lg">
+          <img [src]="post.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute top-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white border border-white/10">
+            {{ post.tag }}
+          </div>
+        </div>
+
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+             <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ post.date }}</p>
+          </div>
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white leading-tight mb-3 group-hover:text-indigo-600 transition-colors">
+            {{ post.title }}
+          </h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 font-serif flex-1">
+            {{ post.excerpt }}
+          </p>
+          
+          <div class="mt-6 flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-white/5">
+             <p class="text-xs font-bold text-slate-900 dark:text-white">By {{ post.author }}</p>
+             <span class="text-slate-300">•</span>
+             <p class="text-xs text-slate-400">{{ post.readTime }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <ng-template #noData>
+      <div class="text-center py-20">
+        <span class="text-6xl">🔍</span>
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-6">No stories found.</h3>
+        <p class="text-slate-500">Try selecting a different category.</p>
+      </div>
+    </ng-template>
+
+    <div *ngIf="displayPosts.length > visibleCount()" class="text-center mt-24">
+      <button (click)="loadMore()" class="px-10 py-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-full text-xs font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all shadow-xl">
+        Load More Stories
+      </button>
+    </div>
+
+  </div>
+</div>

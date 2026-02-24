@@ -1,0 +1,184 @@
+/* Hide Scrollbar */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Background Blob Animation */
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Card Hover Lift */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-8px);
+}
+
+/* Hide Scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* 1. Marquee Keyframes (Slide Left) */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* अर्धे कंटेंट सरकल्यावर लूप होईल */
+}
+
+/* 2. Animation Class */
+.animate-marquee {
+  display: flex;
+  width: max-content; /* कंटेंटला एका रेषेत ठेवण्यासाठी */
+  animation: marquee 30s linear infinite; /* 30s स्पीड (कमी-जास्त करू शकतो) */
+}
+
+/* 3. 🔥 STOP ON HOVER (ही लाईन महत्वाची आहे) */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* 1. Cinematic Image Zoom (Slow & Smooth) */
+@keyframes cinematicZoom {
+    0% { transform: scale(1); filter: brightness(0.8); }
+    100% { transform: scale(1.15); filter: brightness(1); }
+}
+
+.animate-cinematic {
+    animation: cinematicZoom 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 2. Text Reveal with BLUR (High-End Effect) */
+@keyframes fadeInUpBlur {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(10px); /* Suruwatila Blur */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0); /* Nantar Clear */
+    }
+}
+
+.animate-text {
+    opacity: 0; /* Default hidden */
+    animation: fadeInUpBlur 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. Stagger Delays (Ekamekapathe path) */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.3s; }
+.delay-300 { animation-delay: 0.5s; }
+
+/* 4. Progress Bar */
+@keyframes loadProgress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.animate-progress {
+    animation: loadProgress 5s linear forwards;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* 🔥 STOP ON HOVER & TOUCH (Mobile Fix) */
+.animate-marquee:hover, 
+.animate-marquee:active,    /* मोबाईलवर टच करून धरल्यावर थांबेल */
+.animate-marquee:focus,     /* फोकस केल्यावर थांबेल */
+.group:hover .animate-marquee, /* कंटेनरवर टच केल्यावर थांबेल */
+.group:active .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Hide Scrollbar */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* 1. Cinematic Zoom */
+@keyframes cinematicZoom {
+    0% { transform: scale(1); filter: brightness(0.8); }
+    100% { transform: scale(1.15); filter: brightness(1); }
+}
+.animate-cinematic { animation: cinematicZoom 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+
+/* 2. Text Reveal Blur */
+@keyframes fadeInUpBlur {
+    0% { opacity: 0; transform: translateY(40px); filter: blur(10px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.animate-text { opacity: 0; animation: fadeInUpBlur 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* 3. Neon Border Spin */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spinSlow 4s linear infinite; }
+
+.neon-gradient {
+  background: conic-gradient(
+    from 0deg, 
+    transparent 0deg, 
+    transparent 80deg, 
+    #3b82f6 120deg, 
+    #a855f7 180deg, 
+    #3b82f6 240deg, 
+    transparent 360deg
+  );
+}
+
+/* 4. Marquee Animation (Auto Slide Categories) */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Pause Class (Controlled by Angular) */
+.paused {
+  animation-play-state: paused !important;
+}
+
+/* Delays & Progress */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.3s; }
+.delay-300 { animation-delay: 0.5s; }
+@keyframes loadProgress { from { width: 0%; } to { width: 100%; } }
+.animate-progress { animation: loadProgress 5s linear forwards; }

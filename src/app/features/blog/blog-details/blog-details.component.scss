@@ -1,0 +1,358 @@
+/* 1. Rich Typography for innerHTML */
+::ng-deep .blog-rich-text {
+  p {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+  
+  h2, h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: inherit;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  blockquote {
+    border-left: 5px solid #2563eb;
+    padding-left: 2rem;
+    margin: 3rem 0;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #4b5563;
+    background: rgba(37, 99, 235, 0.05);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 0 1rem 1rem 0;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+
+  strong {
+    color: #1e40af;
+    font-weight: 800;
+  }
+}
+
+/* 2. Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. Vertical Text Utility */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Content styling */
+::ng-deep .blog-rich-text {
+  div {
+    scroll-margin-top: 100px; /* Navbar chi height + padding */
+  }
+
+  h2 {
+    scroll-margin-top: 100px;
+  }
+}
+
+/* Sidebar TOC Animation */
+li {
+  transition: transform 0.2s ease;
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* हे तुझ्या SCSS फाईलमध्ये ॲड कर */
+::ng-deep .blog-rich-text {
+  /* ज्या ज्या टॅग्सना ID आहे त्यांना वरून जागा सोडा */
+  [id] {
+    scroll-margin-top: 100px; /* Sticky Navbar साठी जागा */
+    display: block; /* Garaj aslyas */
+  }
+
+  h2, h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Sidebar TOC Styling */
+.toc-link {
+  transition: all 0.3s ease;
+  &:hover {
+    color: #2563eb;
+    transform: translateX(5px);
+  }
+}
+
+/* 1. Drop Cap (First Letter Professional Look) */
+::ng-deep .drop-cap > p:first-of-type::first-letter {
+  font-size: 5rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.85;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  color: #2563eb; /* Blue color */
+  font-family: 'Inter', sans-serif;
+}
+
+/* 2. Rich Text Styling */
+::ng-deep .blog-rich-text {
+  div { scroll-margin-top: 100px; }
+  
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 900;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.025em;
+    color: var(--heading-color);
+  }
+
+  p {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    color: var(--text-color);
+  }
+
+  blockquote {
+    border-left: 5px solid #2563eb;
+    background: rgba(37, 99, 235, 0.05);
+    padding: 2.5rem;
+    margin: 4rem 0;
+    font-size: 1.75rem;
+    font-style: italic;
+    font-weight: 500;
+    border-radius: 0 2rem 2rem 0;
+    
+    &::before {
+      content: '"';
+      font-size: 4rem;
+      color: #2563eb;
+      opacity: 0.3;
+      position: absolute;
+      margin-top: -1rem;
+    }
+  }
+
+  img {
+    border-radius: 2rem;
+    margin: 3rem 0;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  }
+}
+
+/* 3. Vertical Text Utility */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* 4. Smooth Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* selection styling */
+::selection {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* 1. Improved Drop Cap */
+::ng-deep .drop-cap > p:first-of-type::first-letter {
+  font-size: 6rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.7;
+  margin-right: 0.75rem;
+  margin-top: 0.5rem;
+  color: #2563eb;
+  text-shadow: 4px 4px 0px rgba(37, 99, 235, 0.1);
+}
+
+/* 2. Blog Typography */
+::ng-deep .blog-rich-text {
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 4.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+  }
+
+  p {
+    margin-bottom: 2.2rem;
+    line-height: 1.9;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeUp 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* 1. Drop Cap (The first letter look) */
+::ng-deep .drop-cap > p:first-of-type::first-letter {
+  font-size: 6.5rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.7;
+  margin-right: 1.2rem;
+  margin-top: 0.5rem;
+  color: #4f46e5;
+  text-shadow: 10px 10px 0px rgba(79, 70, 229, 0.05);
+}
+
+/* 2. Blog Typography Overhaul */
+::ng-deep .blog-rich-text {
+  h2 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-top: 5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--slate-900);
+  }
+
+  p {
+    margin-bottom: 2.2rem;
+    line-height: 1.95;
+    font-size: 1.25rem;
+    color: #475569; // Slate 600
+  }
+
+  blockquote {
+    border-left: 6px solid #4f46e5;
+    background: rgba(79, 70, 229, 0.03);
+    padding: 3rem;
+    margin: 5rem 0;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.4;
+    border-radius: 0 3rem 3rem 0;
+    position: relative;
+    
+    &::after {
+      content: '"';
+      position: absolute;
+      top: -2rem;
+      right: 2rem;
+      font-size: 10rem;
+      color: #4f46e5;
+      opacity: 0.05;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 2rem;
+    margin-bottom: 2.5rem;
+    li {
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+    }
+  }
+}
+
+/* 3. Global Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 { animation-delay: 0.2s; }
+
+/* Dark mode overrides */
+:host-context(.dark) {
+  ::ng-deep .blog-rich-text {
+    p { color: #94a3b8; } // Slate 400
+    h2 { color: white; }
+  }
+}
+
+/* 1. Typography Overhaul */
+::ng-deep .blog-rich-text {
+  p {
+    margin-bottom: 2.5rem;
+    line-height: 2;
+    font-size: 1.35rem;
+    color: #334155; // Default Slate 700
+  }
+
+  h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    letter-spacing: -0.05em;
+    color: #0f172a;
+    line-height: 1.1;
+  }
+
+  /* 2. Professional Quote Styling */
+  blockquote {
+    border-left: 8px solid #4f46e5;
+    background: linear-gradient(to right, rgba(79, 70, 229, 0.05), transparent);
+    padding: 3.5rem;
+    margin: 5rem 0;
+    font-size: 2.25rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.3;
+    border-radius: 0 3rem 3rem 0;
+  }
+}
+
+/* 3. Dark Mode Specific Text Colors */
+.dark {
+  ::ng-deep .blog-rich-text {
+    p { color: #94a3b8; } // Slate 400
+    h2 { color: white; }
+    blockquote {
+        background: linear-gradient(to right, rgba(79, 70, 229, 0.1), transparent);
+        color: white;
+    }
+  }
+}
+
+/* 4. Smooth Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

@@ -1,0 +1,46 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/auth.service';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
+})
+export class LoginComponent {
+  loginForm: FormGroup;
+  isLoading = false;
+  errorMessage = '';
+
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  constructor() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (res) => {
+          // Token Save kara ani Feed var pathva
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/feed']);
+        },
+        error: (err: { error: { message: string; }; }) => {
+          this.errorMessage = err.error.message || 'Login failed';
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+}

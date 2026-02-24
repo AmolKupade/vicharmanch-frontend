@@ -24,8 +24,8 @@ import { AuthComponent } from './features/auth/auth/auth.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default Home Page (Jithe Landing Page asel)
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  // { path: 'login', component: LoginComponent },
+  // { path: 'register', component: RegisterComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'blog/:id', component: BlogDetailsComponent },
   { path: 'category/:name', component: CategoryListComponent },
